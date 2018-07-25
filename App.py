@@ -2,7 +2,7 @@ from PIL import Image
 
 
 def crop(path, height, width):
-    mean = []
+    mapw=".,:;ox%#@"
     im = Image.open(path)
     imgwidth, imgheight = im.size
     for i in range(0, imgheight, width):
@@ -17,10 +17,11 @@ def crop(path, height, width):
                     total += a.getpixel((k, j))[0]
             mean = total / (crowidth * croheight)
             f = open("picture.txt", "a+")
-            if mean <= 150:
-                f.write("@")
-            else:
-                f.write(" ")
+            index = math.floor(((255-mean)*10)/256)
+            #I don't understand this bit though it helps in resolution of complex images also
+            #stackoverflow
+            str=mapw[index-1]
+            f.write(str)
         f.write("\n")
     f.close()
 
